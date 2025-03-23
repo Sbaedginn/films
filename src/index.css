@@ -1,11 +1,22 @@
 *{
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+.cotainer{
+  display: block;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 60px;
 }
 
 header{
   background: #4489b4;
   color: #fff;
   padding: 15px;
+}
+
+.search_container{
+
 }
