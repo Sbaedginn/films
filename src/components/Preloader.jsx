@@ -1,8 +1,8 @@
 const Preloader = () => {
     return (
-        <div className="preload_container">
-            <img src="/loading.gif" alt="" />
-            <p>Ждите...</p>
+        <div className="preloader_container">
+            <img className="preloader_img" src="/loading.gif" alt="" />
+            <p className="preloader">Ждите...</p>
         </div>
         );
 };

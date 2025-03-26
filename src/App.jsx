@@ -8,10 +8,16 @@ import './App.css';
 
 const API_KEY = "4ec8f44f" //"53fee74b"
 const DEFAULT_MOVIES = ["Inception", "The Dark Knight", "Interstellar", "Titanic", "The Matrix"];
+const CONTENT_TYPES = {
+  ALL: "all",
+  FILMS: "movie",
+  SERIALS: "series"
+};
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [contentType, setContentType] = useState(CONTENT_TYPES.ALL);
 
   useEffect(() => {
     fetchPopularMovies();
@@ -35,7 +41,13 @@ function App() {
   const fetchMovies = async (query) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}`);
+      let response;
+      if (contentType === CONTENT_TYPES.ALL) {
+        response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}`)
+      } else {
+        response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}&type=${contentType}`)
+      }
+      // const response = await ? fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}`) : fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}&type=${contentType}`);
       const data = await response.json();
       setMovies(data.Search || []);
     } catch (error) {
@@ -47,13 +59,15 @@ function App() {
   return (
     <div className="main">
       <Header />
+      <p>{contentType}</p>
+      <Search onSearch={fetchMovies} type={contentType} setType={setContentType} types={CONTENT_TYPES} />
       <div className="container">
-        <Search onSearch={fetchMovies} />
         {loading ? (<Preloader />) : (
           <div className="movies_box">
             {movies.length > 0 ? movies.map((movie) => <MovieCard key={movie.imdbID} movie={movie} />) : <p>Ничего не найдено</p>}
           </div>
         )}
+
       </div>
     </div>
   )
