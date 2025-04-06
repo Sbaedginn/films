@@ -91,3 +91,8 @@ header {
   width: 60px;
   height: 60px;
 }
+
+
+.detail_img{
+  max-width: 300px;
+}
