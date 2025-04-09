@@ -55,7 +55,6 @@ function Home() {
   }
   return (
     <div className="main">
-      <p>{contentType}</p>
       <Search onSearch={fetchMovies} type={contentType} setType={setContentType} types={CONTENT_TYPES} />
       <div className="container">
         {loading ? (<Preloader />) : (

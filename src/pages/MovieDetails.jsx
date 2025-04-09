@@ -24,39 +24,45 @@ const MovieDetails = () => {
         fetchMovie(id, setMovie);
         setLoading(false)
     }, [id]);
+
     return (
-        <div className="container">
-        <Link to="/">back</Link>
-            {loading ? (<Preloader />) : (
-                <div className="movies_box">
-                    {
-                        movie ?
-                            (
-                                <div className="movie_detail">
-                                    <h2>{movie.Title}</h2>
-                                    <img src={movie.Poster != "N/A" ? movie.Poster : "/N-A.png"} alt={movie.Title} className="detail_img"/>
-                                    <p><span>Run time:</span> {movie.Runtime}</p>
-                                    <p><span>Rating:</span> {movie.imdbRating}</p>
-                                    <p><span>Year:</span> {movie.Year}</p>
-                                    <p><span>Genre:</span> {movie.Genre}</p>
-                                    <p><span>Director:</span> {movie.Director}</p>
-                                    <p><span>Actors:</span> {movie.Actors}</p>
-                                    <p><span>BoxOffice:</span> {movie.BoxOffice}</p>
-                                    <p><span>Plot:</span> {movie.Plot}</p>
-                                    <div className="ratings">
-                                      {movie.ratings ? (
-                                        movie.ratings.map((Sourse, Value) => {
-                                            (
-                                                <p><span>{Sourse}:</span> {Value}</p>
-                                            )
-                                        })
-                                      ) : <Preloader /> }  
-                                    </div>
+        <div className="movie-details-container">
+            <Link to="/" className="back-link">Back</Link>
+            {loading ? (
+                <Preloader />
+            ) : (
+                movie ? (
+                    <div className="movie-card">
+                        <div className="poster-section">
+                            <img
+                                src={movie.Poster !== "N/A" ? movie.Poster : "/N-A.png"}
+                                alt={movie.Title}
+                                className="poster-img"
+                            />
+                        </div>
+                        <div className="info-section">
+                            <h2 className="movie-title">{movie.Title}</h2>
+                            <p><strong>Year:</strong> {movie.Year}</p>
+                            <p><strong>Genre:</strong> {movie.Genre}</p>
+                            <p><strong>Runtime:</strong> {movie.Runtime}</p>
+                            <p><strong>Rating:</strong> {movie.imdbRating}</p>
+                            <p><strong>Box Office:</strong> {movie.BoxOffice}</p>
+                            <p><strong>Director:</strong> {movie.Director}</p>
+                            <p><strong>Actors:</strong> {movie.Actors}</p>
+                            <p><strong>Plot:</strong> {movie.Plot}</p>
+                            {movie.Ratings && movie.Ratings.length > 0 && (
+                                <div className="ratings">
+                                    <h4>Ratings:</h4>
+                                    {movie.Ratings.map((rating, index) => (
+                                        <p key={index}><strong>{rating.Source}:</strong> {rating.Value}</p>
+                                    ))}
                                 </div>
-                            ) :
-                            <p>Ничего не найдено</p>
-                    }
-                </div>
+                            )}
+                        </div>
+                    </div>
+                ) : (
+                    <p className="not-found">Movie not found</p>
+                )
             )}
         </div>
     );

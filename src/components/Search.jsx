@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const Search = ({ onSearch, type, setType, types }) => {
     const [query, setQuery] = useState("");
@@ -9,6 +9,14 @@ const Search = ({ onSearch, type, setType, types }) => {
         }
     };
 
+    useEffect(() => {
+        handleSearch();
+    }, [type]);
+
+    const setTypeAndSearch = (type) => {
+        setType(type);
+    };
+
     return (
         <div className="container">
 
@@ -17,40 +25,40 @@ const Search = ({ onSearch, type, setType, types }) => {
                 <input
                     className="search_input"
                     type="text"
-                    placeholder="Поиск фильмов"
+                    placeholder="Search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={(e) => e.key == "Enter" && handleSearch()}
                 />
-                <button onClick={handleSearch} className="search_button">Поиск</button>
+                <button onClick={handleSearch} className="search_button">Search</button>
             </div>
             <div className="search_filter">
                 <label>
                     <input
                         name="contentType"
                         type="radio" 
-                        onChange={() => setType(types.ALL)}
+                        onChange={() => setTypeAndSearch(types.ALL)}
                         checked={type === types.ALL}
                         />
-                    Всё
+                    All
                 </label>
                 <label>
                     <input
                         name="contentType"
                         type="radio" 
-                        onChange={() => setType(types.FILMS)}
+                        onChange={() => setTypeAndSearch(types.FILMS)}
                         checked={type === types.FILMS}
                         />
-                    Фильмы
+                    Films
                 </label>
                 <label>
                     <input
                         name="contentType"
                         type="radio" 
-                        onChange={() => setType(types.SERIALS)}
+                        onChange={() => setTypeAndSearch(types.SERIALS)}
                         checked={type === types.SERIALS}
                         />
-                    Сериалы
+                    Series
                 </label>
             </div>
         </div>
